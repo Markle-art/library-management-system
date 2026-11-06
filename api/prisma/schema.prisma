@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,12 +14,13 @@ enum Role {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  role      Role     @default(PATRON)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(PATRON)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Genre {
@@ -32,6 +34,7 @@ model Book {
   title         String
   author        String
   isbn          String?  @unique
+  totalCopies   Int      @default(1)
   publishedYear Int?
   genreId       Int
   genre         Genre    @relation(fields: [genreId], references: [id], onDelete: Restrict)

@@ -3,3 +3,12 @@ node_modules
 .env
 
 /generated/prisma
+
+# Compiled build output
+/dist/
+
+# TypeScript build information
+*.tsbuildinfo
+
+# Temporary database diagnostic
+test-db.cjs
