@@ -1,9 +1,11 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useReadingList } from '../context/ReadingListContext';
 
 function BookDetail() {
   const { id } = useParams();
+  const { readingList, addBook, removeBook } = useReadingList();
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -63,6 +65,18 @@ function BookDetail() {
 
   if (!book) return null;
 
+  const isInReadingList = readingList.some(
+    (item) => item.id === book.id,
+  );
+
+  function handleReadingListToggle() {
+    if (isInReadingList) {
+      removeBook(book.id);
+    } else {
+      addBook(book);
+    }
+  }
+
   return (
     <main className="detail-page">
       <Link to="/" className="back-link">
@@ -98,6 +112,15 @@ function BookDetail() {
               <dd>{book.totalCopies}</dd>
             </div>
           </dl>
+
+          <button
+            type="button"
+            onClick={handleReadingListToggle}
+          >
+            {isInReadingList
+              ? 'Remove from Reading List'
+              : 'Add to Reading List'}
+          </button>
         </div>
       </article>
     </main>
